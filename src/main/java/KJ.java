@@ -1,7 +1,7 @@
 import  java.util.Scanner;
 
 public class KJ {
-    public static final String Line ="————————————————————————————————————————————————————————————————————";
+    public static final String Line ="--------------------------------------------------------------";
     private static final Task[] tasks = new Task[100];
     private static int count = 0;
 

@@ -1,8 +1,9 @@
-import  java.util.Scanner;
+import java.util.Scanner;
+import java.util.ArrayList;
 
 public class KJ {
     public static final String Line ="--------------------------------------------------------------";
-    private static final Task[] tasks = new Task[100];
+    private static final ArrayList<Task> tasks = new ArrayList<>();
     private static int count = 0;
 
     public static void greeting() {
@@ -31,11 +32,15 @@ public class KJ {
                         || input.startsWith("deadline")
                         || input.startsWith("event")) {
                     handleAdd(input);
+                } else if (input.startsWith("delete")) {
+                    deleteTask(input);
                 } else {
                     throw new KJException("Sorry, I don't understand that command.");
                 }
             } catch (Exception e) {
+                System.out.println(Line);
                 System.out.println(e.getMessage());
+                System.out.println(Line);
             }
         }
     }
@@ -53,25 +58,25 @@ public class KJ {
                     throw new KJException("The description of a todo cannot be empty.");
                 }
                 String description = input.substring(5);
-                tasks[count] = new ToDo(description);
+                tasks.add(new ToDo(description));
             } else if (input.startsWith("event")) {
                 if (!input.contains("/from") || !input.contains("/to")) {
                     throw new KJException("Event must have /from and /to");
                 }
                 String[] description = input.substring(6).split(" /from | /to ");
-                tasks[count] = new Event(description[0], description[1], description[2]);
+                tasks.add(new Event(description[0], description[1], description[2]));
             } else if (input.startsWith("deadline")) {
                 if (!input.contains("/by")) {
                     throw new KJException("Deadline must have /by.");
                 }
                 String[] description = input.substring(9).split(" /by ");
-                tasks[count] = new Deadline(description[0], description[1]);
+                tasks.add(new Deadline(description[0], description[1]));
             }
             System.out.println(Line);
             System.out.println("Got it. I've added this task:");
-            System.out.println(" " + tasks[count]);
+            System.out.println(" " + tasks.getLast());
             count++;
-            System.out.println("Now you have " + count + " tasks in the list.");
+            System.out.println("Now you have " + tasks.size() + " tasks in the list.");
             System.out.println(Line);
         } catch (Exception e) {
             System.out.println(Line);
@@ -83,44 +88,66 @@ public class KJ {
     public static void listMessage() {
         System.out.println(Line);
         for(int i = 0; i<count; i++) {
-            System.out.println(i+1 + "." + tasks[i]);
+            System.out.println(i+1 + "." + tasks.get(i));
         }
         System.out.println(Line);
     }
 
     public static void markTask(String input) {
         try {
-            System.out.println(Line);
             int taskNum = Integer.parseInt(input.split(" ")[1]) - 1;
             if (taskNum < 0 || taskNum >= count) {
-                throw new IndexOutOfBoundsException();
+                throw new KJException("That task number does not exist.");
             }
-            tasks[taskNum].markAsDone();
-            System.out.println("Nice! I've marked this task as done:");
-            System.out.println(tasks[taskNum]);
             System.out.println(Line);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Please provide a valid task number.");
-        } catch (IndexOutOfBoundsException e) {
-            throw new IllegalArgumentException("That task number does not exist.");
+            tasks.get(taskNum).markAsDone();
+            System.out.println("Nice! I've marked this task as done:");
+            System.out.println(tasks.get(taskNum));
+            System.out.println(Line);
+        } catch (Exception e) {
+            System.out.println(Line);
+            System.out.println(e.getMessage());
+            System.out.println(Line);
         }
     }
 
     public static void unmarkTask(String input) {
         try {
-            System.out.println(Line);
             int taskNum = Integer.parseInt(input.split(" ")[1]) - 1;
             if (taskNum < 0 || taskNum >= count) {
-                throw new IndexOutOfBoundsException();
+                throw new KJException("That task number does not exist.");
             }
-            tasks[taskNum].markAsUndone();
-            System.out.println("Nice! I've unmarked this task as done:");
-            System.out.println(tasks[taskNum]);
             System.out.println(Line);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Please provide a valid task number.");
-        } catch (IndexOutOfBoundsException e) {
-            throw new IllegalArgumentException("That task number does not exist.");
+            tasks.get(taskNum).markAsUndone();
+            System.out.println("Nice! I've unmarked this task as done:");
+            System.out.println(tasks.get(taskNum));
+            System.out.println(Line);
+        } catch (Exception e) {
+            System.out.println(Line);
+            System.out.println(e.getMessage());
+            System.out.println(Line);
+        }
+    }
+
+    public static void deleteTask(String input) {
+        try {
+            int taskNum = Integer.parseInt(input.split(" ")[1]) - 1;
+
+            if (taskNum < 0 || taskNum >= tasks.size()) {
+                throw new KJException("That task number does not exist.");
+            }
+
+            Task removedTask = tasks.remove(taskNum);
+
+            System.out.println(Line);
+            System.out.println("Noted. I've removed this task:");
+            System.out.println("  " + removedTask);
+            System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+            System.out.println(Line);
+        } catch (Exception e) {
+            System.out.println(Line);
+            System.out.println(e.getMessage());
+            System.out.println(Line);
         }
     }
 

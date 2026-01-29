@@ -39,10 +39,21 @@ public class KJ {
     }
 
     public static void handleAdd(String input) {
-        tasks[count] = new Task(input);
-        count++;
+        if(input.startsWith("todo")) {
+            String description = input.substring(5);
+            tasks[count] = new ToDo(description);
+        } else if (input.startsWith("event")) {
+            String[] description = input.substring(6).split(" /from | /to ");
+            tasks[count] = new Event(description[0], description[1], description[2]);
+        } else if (input.startsWith("deadline")) {
+            String[] description = input.substring(9).split(" /by ");
+            tasks[count] = new Deadline(description[0], description[1]);
+        }
         System.out.println(Line);
-        System.out.println(" added: " + input);
+        System.out.println("Got it. I've added this task:");
+        System.out.println(" " + tasks[count]);
+        count++;
+        System.out.println("Now you have " + count + " tasks in the list.");
         System.out.println(Line);
     }
 

@@ -147,7 +147,7 @@ public class KJ {
         } catch (Exception e) {
             System.out.println(Line);
             System.out.println(e.getMessage());
-            System.out.println(Line);
+
         }
     }
 

@@ -3,8 +3,8 @@ import java.util.ArrayList;
 
 public class KJ {
     public static final String Line ="--------------------------------------------------------------";
-    private static final ArrayList<Task> tasks = new ArrayList<>();
-    private static int count = 0;
+    private static ArrayList<Task> tasks = new ArrayList<>();
+    private static final Storage storage = new Storage("./data/kj.txt");
 
     public static void greeting() {
         System.out.println(Line);
@@ -59,23 +59,25 @@ public class KJ {
                 }
                 String description = input.substring(5);
                 tasks.add(new ToDo(description));
+                autoSave();
             } else if (input.startsWith("event")) {
                 if (!input.contains("/from") || !input.contains("/to")) {
                     throw new KJException("Event must have /from and /to");
                 }
                 String[] description = input.substring(6).split(" /from | /to ");
                 tasks.add(new Event(description[0], description[1], description[2]));
+                autoSave();
             } else if (input.startsWith("deadline")) {
                 if (!input.contains("/by")) {
                     throw new KJException("Deadline must have /by.");
                 }
                 String[] description = input.substring(9).split(" /by ");
                 tasks.add(new Deadline(description[0], description[1]));
+                autoSave();
             }
             System.out.println(Line);
             System.out.println("Got it. I've added this task:");
             System.out.println(" " + tasks.getLast());
-            count++;
             System.out.println("Now you have " + tasks.size() + " tasks in the list.");
             System.out.println(Line);
         } catch (Exception e) {
@@ -87,7 +89,7 @@ public class KJ {
 
     public static void listMessage() {
         System.out.println(Line);
-        for(int i = 0; i<count; i++) {
+        for(int i = 0; i< tasks.size(); i++) {
             System.out.println(i+1 + "." + tasks.get(i));
         }
         System.out.println(Line);
@@ -96,11 +98,12 @@ public class KJ {
     public static void markTask(String input) {
         try {
             int taskNum = Integer.parseInt(input.split(" ")[1]) - 1;
-            if (taskNum < 0 || taskNum >= count) {
+            if (taskNum < 0 || taskNum >= tasks.size()) {
                 throw new KJException("That task number does not exist.");
             }
             System.out.println(Line);
             tasks.get(taskNum).markAsDone();
+            autoSave();
             System.out.println("Nice! I've marked this task as done:");
             System.out.println(tasks.get(taskNum));
             System.out.println(Line);
@@ -114,11 +117,12 @@ public class KJ {
     public static void unmarkTask(String input) {
         try {
             int taskNum = Integer.parseInt(input.split(" ")[1]) - 1;
-            if (taskNum < 0 || taskNum >= count) {
+            if (taskNum < 0 || taskNum >= tasks.size()) {
                 throw new KJException("That task number does not exist.");
             }
             System.out.println(Line);
             tasks.get(taskNum).markAsUndone();
+            autoSave();
             System.out.println("Nice! I've unmarked this task as done:");
             System.out.println(tasks.get(taskNum));
             System.out.println(Line);
@@ -138,6 +142,7 @@ public class KJ {
             }
 
             Task removedTask = tasks.remove(taskNum);
+            autoSave();
 
             System.out.println(Line);
             System.out.println("Noted. I've removed this task:");
@@ -151,7 +156,20 @@ public class KJ {
         }
     }
 
+    private static void autoSave() {
+        try {
+            storage.save(tasks);
+        } catch (KJException e) {
+            System.out.println("Warning: Could not save changes to disk.");
+        }
+    }
+
     public static void main() {
+        try {
+            tasks = storage.load();
+        } catch (Exception e) {
+            System.out.println("Warning: No existing data found.");
+        }
         greeting();
         readInput();
     }

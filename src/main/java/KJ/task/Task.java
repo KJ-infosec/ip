@@ -1,4 +1,4 @@
-package KJ;
+package KJ.task;
 
 public abstract class Task {
   protected final String description;

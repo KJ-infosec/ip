@@ -1,6 +1,8 @@
 package KJ;
 
 import java.util.Scanner;
+import KJ.task.Task;
+import KJ.task.TaskList;
 
 public class Ui {
     private Scanner scanner;

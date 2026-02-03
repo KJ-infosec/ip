@@ -1,14 +1,15 @@
-package KJ;
+package KJ.task;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import KJ.KJException;
 
-public class Deadline extends Task{
+public class Deadline extends Task {
     protected LocalDateTime by;
     private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a");
     private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
 
-    public Deadline(String description, String date) throws KJException{
+    public Deadline(String description, String date) throws KJException {
         super(description);
         try {
             this.by = LocalDateTime.parse(date, INPUT_FORMAT);

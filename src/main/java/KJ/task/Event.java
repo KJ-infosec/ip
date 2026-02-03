@@ -1,9 +1,9 @@
-package KJ;
+package KJ.task;
 
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 
-public class Event extends Task{
+public class Event extends Task {
     protected LocalDateTime startTime;
     protected LocalDateTime endTime;
     private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a");

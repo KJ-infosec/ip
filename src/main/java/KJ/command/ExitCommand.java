@@ -1,8 +1,7 @@
 package KJ.command;
 
 import KJ.KJException;
-import KJ.Task;
-import KJ.TaskList;
+import KJ.task.TaskList;
 import KJ.Ui;
 import KJ.Storage;
 

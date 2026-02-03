@@ -1,3 +1,5 @@
+package KJ;
+
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 
@@ -16,7 +18,7 @@ public class Event extends Task{
     @Override
     public String toFileString() {
         return "E | " + (isDone ? "1" : "0") + " | " + description
-                + " | " + startTime.format(OUTPUT_FORMAT) + " | " + endTime.format(OUTPUT_FORMAT);
+                + " | " + startTime.format(INPUT_FORMAT) + " | " + endTime.format(INPUT_FORMAT);
     }
 
     @Override

@@ -37,5 +37,4 @@ public class UnmarkCommand extends Command{
             ui.showErrorMessage(e.getMessage());
         }
     }
-
 }

@@ -25,8 +25,11 @@ public class TaskList {
         return tasks.get(taskNum);
     }
 
-
     public ArrayList<Task> getTasks() {
         return this.tasks;
+    }
+
+    public boolean isEmpty() {
+        return tasks.isEmpty();
     }
 }

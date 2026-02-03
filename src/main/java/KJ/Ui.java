@@ -78,4 +78,21 @@ public class Ui {
         System.out.println("Warning: No existing data found." );
         System.out.println(LINE);
     }
+
+    /**
+     * Displays the list of tasks that match the search keyword.
+     * @param matchingTasks The filtered list of tasks.
+     */
+    public void showMatchingTasks(TaskList matchingTasks) {
+        System.out.println(LINE);
+        if (matchingTasks.isEmpty()) {
+            System.out.println(" No matching tasks found in your list.");
+        } else {
+            System.out.println(" Here are the matching tasks in your list:");
+            for (int i = 0; i < matchingTasks.size(); i++) {
+                System.out.println(" " + (i + 1) + "." + matchingTasks.get(i));
+            }
+        }
+        System.out.println(LINE);
+    }
 }

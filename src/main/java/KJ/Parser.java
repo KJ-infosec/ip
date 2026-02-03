@@ -4,6 +4,7 @@ import KJ.command.AddCommand;
 import KJ.command.Command;
 import KJ.command.DeleteCommand;
 import KJ.command.ExitCommand;
+import KJ.command.FindCommand;
 import KJ.command.ListCommand;
 import KJ.command.MarkCommand;
 import KJ.command.UnmarkCommand;
@@ -80,6 +81,14 @@ public class Parser {
         if(input.startsWith("delete")) {
             int taskNum = Integer.parseInt(input.split(" ")[1]) - 1;
             return new DeleteCommand(taskNum);
+        }
+
+        if (input.startsWith("find")) {
+            String keyword = input.substring(4).trim();
+            if (keyword.isEmpty()) {
+                throw new KJException("The search keyword cannot be empty.");
+            }
+            return new FindCommand(keyword);
         }
 
         throw new KJException("Sorry, I don't understand that command.");

@@ -43,10 +43,15 @@ public class TaskList {
         return tasks.get(taskNum);
     }
 
+
     /**
      * @return The raw ArrayList containing all tasks.
      */
     public ArrayList<Task> getTasks() {
         return this.tasks;
+    }
+
+    public boolean isEmpty() {
+        return tasks.isEmpty();
     }
 }

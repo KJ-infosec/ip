@@ -11,8 +11,16 @@ import KJ.task.Deadline;
 import KJ.task.Event;
 import KJ.task.ToDo;
 
-
+/**
+ * Parsing and reading user input into KJ application.
+ */
 public class Parser {
+    /**
+     * Parses the given input string and returns the appropriate Command object.
+     * * @param input The raw user input string.
+     * @return A Command object representing the user's request.
+     * @throws KJException If the input format is invalid or the command is unknown.
+     */
     static int taskNum;
     public static Command parse(String input) throws KJException{
         if(input.equals("bye")) {

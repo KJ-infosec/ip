@@ -7,6 +7,11 @@ public class KJ {
     private TaskList tasks;
     private Ui ui;
 
+    /**
+     * Initializes the KJ application with a specific file path for data storage.
+     * If the data file is not found or corrupted, a new empty task list is initialized.
+     * * @param filePath The relative path to the file where tasks are saved
+     */
     public KJ(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -18,6 +23,11 @@ public class KJ {
         }
     }
 
+    /**
+     * Starts the main program loop.
+     * Continuously reads user input, parses it into commands, and executes them.
+     * Keep running until an exit command is issued.
+     */
     public void run() {
         ui.showWelcome();
         boolean isExit = false;

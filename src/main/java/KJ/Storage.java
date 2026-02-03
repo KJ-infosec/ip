@@ -18,6 +18,11 @@ public class Storage {
         this.filePath = filePath;
     }
 
+    /**
+     * Loads the task list from the file specified in the constructor.
+     * If the directory or file does not exist, they will be created.
+     * @throws KJException If there is an issue reading the file or the data format is invalid.
+     */
     public TaskList load() throws KJException {
         TaskList tasks = new TaskList();
         File file = new File(filePath);
@@ -44,6 +49,11 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Decodes a single line of text from the data file into a Task object.
+     * * @param line The raw string line from the data file.
+     * @throws KJException If the data format is unrecognized or corrupted.
+     */
     private Task parseTask(String line) throws KJException {
         try{
             String[] parts = line.split(" \\| ");
@@ -74,6 +84,11 @@ public class Storage {
         }
     }
 
+    /**
+     * Saves the current task list to the data file.
+     * Each task is converted into a storage-friendly string format.
+     * @throws KJException If there is an I/O error during the saving process.
+     */
     public void save(TaskList tasks) throws KJException {
         try {
             FileWriter fw = new FileWriter(filePath);

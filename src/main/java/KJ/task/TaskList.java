@@ -25,9 +25,6 @@ public class TaskList {
         return tasks.get(taskNum);
     }
 
-    public Task getLast() {
-        return tasks.getLast();
-    }
 
     public ArrayList<Task> getTasks() {
         return this.tasks;

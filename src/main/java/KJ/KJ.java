@@ -12,7 +12,7 @@ public class KJ {
      * If the data file is not found or corrupted, a new empty task list is initialized.
      * * @param filePath The relative path to the file where tasks are saved
      */
-    public KJ(String filePath) {
+    public KJ(String filePath){
         ui = new Ui();
         storage = new Storage(filePath);
         try{

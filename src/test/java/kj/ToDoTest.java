@@ -1,4 +1,4 @@
-package KJ.task;  //same package as the class being tested
+package kj.task;  //same package as the class being tested
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

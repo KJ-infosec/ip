@@ -1,84 +1,84 @@
-package KJ;
+package kj;
 
-import KJ.command.AddCommand;
-import KJ.command.Command;
-import KJ.command.DeleteCommand;
-import KJ.command.ExitCommand;
-import KJ.command.FindCommand;
-import KJ.command.ListCommand;
-import KJ.command.MarkCommand;
-import KJ.command.UnmarkCommand;
-import KJ.task.Deadline;
-import KJ.task.Event;
-import KJ.task.ToDo;
+import kj.command.AddCommand;
+import kj.command.Command;
+import kj.command.DeleteCommand;
+import kj.command.ExitCommand;
+import kj.command.FindCommand;
+import kj.command.ListCommand;
+import kj.command.MarkCommand;
+import kj.command.UnmarkCommand;
+import kj.task.Deadline;
+import kj.task.Event;
+import kj.task.ToDo;
 
 /**
  * Parsing and reading user input into KJ application.
  */
 public class Parser {
+    private static int taskNum;
     /**
      * Parses the given input string and returns the appropriate Command object.
-     * * @param input The raw user input string.
+     * @param input The raw user input string.
      * @return A Command object representing the user's request.
-     * @throws KJException If the input format is invalid or the command is unknown.
+     * @throws KjException If the input format is invalid or the command is unknown.
      */
-    static int taskNum;
-    public static Command parse(String input) throws KJException{
-        if(input.equals("bye")) {
+    public static Command parse(String input) throws KjException {
+        if (input.equals("bye")) {
             return new ExitCommand();
         }
 
-        if(input.equals("list")) {
+        if (input.equals("list")) {
             return new ListCommand();
         }
 
-        if(input.startsWith("mark")) {
+        if (input.startsWith("mark")) {
             taskNum = Integer.parseInt(input.split(" ")[1]) - 1;
             return new MarkCommand(taskNum);
         }
 
-        if(input.startsWith("unmark")) {
+        if (input.startsWith("unmark")) {
             taskNum = Integer.parseInt(input.split(" ")[1]) - 1;
             return new UnmarkCommand(taskNum);
         }
 
-        if(input.startsWith("todo")) {
+        if (input.startsWith("todo")) {
             try {
                 if (input.equals("todo")) {
-                    throw new KJException("The description of a todo cannot be empty.");
+                    throw new KjException("The description of a todo cannot be empty.");
                 }
                 String description = input.substring(5);
                 return new AddCommand(new ToDo(description));
-            } catch (KJException e) {
+            } catch (KjException e) {
                 System.out.println(e.getMessage());
             }
         }
 
-        if(input.startsWith("event")) {
+        if (input.startsWith("event")) {
             try {
                 if (!input.contains("/from") || !input.contains("/to")) {
-                    throw new KJException("Event must have /from and /to");
+                    throw new KjException("Event must have /from and /to");
                 }
                 String[] description = input.substring(6).split(" /from | /to ");
                 return new AddCommand(new Event(description[0], description[1], description[2]));
-            } catch (KJException e) {
+            } catch (KjException e) {
                 System.out.println(e.getMessage());
             }
         }
 
-        if(input.startsWith("deadline")) {
+        if (input.startsWith("deadline")) {
             try {
                 if (!input.contains("/by")) {
-                    throw new KJException("Deadline must have /by.");
+                    throw new KjException("Deadline must have /by.");
                 }
                 String[] description = input.substring(9).split(" /by ");
                 return new AddCommand(new Deadline(description[0], description[1]));
-            } catch (KJException e) {
+            } catch (KjException e) {
                 System.out.println(e.getMessage());
             }
         }
 
-        if(input.startsWith("delete")) {
+        if (input.startsWith("delete")) {
             int taskNum = Integer.parseInt(input.split(" ")[1]) - 1;
             return new DeleteCommand(taskNum);
         }
@@ -86,11 +86,11 @@ public class Parser {
         if (input.startsWith("find")) {
             String keyword = input.substring(4).trim();
             if (keyword.isEmpty()) {
-                throw new KJException("The search keyword cannot be empty.");
+                throw new KjException("The search keyword cannot be empty.");
             }
             return new FindCommand(keyword);
         }
 
-        throw new KJException("Sorry, I don't understand that command.");
+        throw new KjException("Sorry, I don't understand that command.");
     }
 }

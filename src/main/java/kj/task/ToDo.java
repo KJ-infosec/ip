@@ -1,4 +1,4 @@
-package KJ.task;
+package kj.task;
 
 /**
  * Represents a basic task without any specific date or time attached to it.
@@ -9,7 +9,7 @@ public class ToDo extends Task {
 
     /**
      * Constructs a ToDo task with the given description.
-     * * @param description The description of the task.
+     * @param description The description of the task.
      */
     public ToDo(String description) {
         super(description);
@@ -18,7 +18,7 @@ public class ToDo extends Task {
     /**
      * Returns a string representation of the todo task formatted for file storage.
      * The format used is: T | isDone | description.
-     * * @return A formatted string suitable for saving to a text file.
+     * @return A formatted string suitable for saving to a text file.
      */
     @Override
     public String toFileString() {
@@ -28,7 +28,7 @@ public class ToDo extends Task {
     /**
      * Returns a string representation of the todo task for display to the user.
      * Includes the task type identifier [T], the status icon, and the description.
-     * * @return A user-friendly string representation of the todo task.
+     * @return A user-friendly string representation of the todo task.
      */
     @Override
     public String toString() {

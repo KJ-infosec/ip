@@ -1,4 +1,4 @@
-package KJ.task;
+package kj.task;
 
 import java.util.ArrayList;
 

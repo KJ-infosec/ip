@@ -1,13 +1,16 @@
-package KJ;
+package kj;
 
 import java.util.Scanner;
-import KJ.task.Task;
-import KJ.task.TaskList;
 
+import kj.task.Task;
+import kj.task.TaskList;
+
+/**
+ * Handles the user interface of the application.
+ */
 public class Ui {
+    public static final String LINE = "--------------------------------------------------------------";
     private Scanner scanner;
-    public static final String LINE ="--------------------------------------------------------------";
-
     public Ui() {
         this.scanner = new Scanner(System.in);
     }
@@ -33,7 +36,7 @@ public class Ui {
 
     /**
      * Reads the next line of input from the user.
-     * * @return The full string entered by the user.
+     * @return The full string entered by the user.
      */
     public String readCommand() {
         return this.scanner.nextLine();
@@ -41,7 +44,7 @@ public class Ui {
 
     /**
      * Displays a message confirming that a task has been added.
-     * * @param task The task that was added.
+     * @param task The task that was added.
      * @param taskSize The current total number of tasks in the list.
      */
     public void showAddedMessage(Task task, int taskSize) {
@@ -54,20 +57,20 @@ public class Ui {
 
     /**
      * Lists all the tasks currently present in the task list.
-     * * @param tasks The TaskList object containing the tasks.
+     * @param tasks The TaskList object containing the tasks.
      * @param taskSize The number of tasks to display.
      */
     public void showListMessage(TaskList tasks, int taskSize) {
         System.out.println(LINE);
-        for(int i = 0; i< tasks.size(); i++) {
-            System.out.println(i+1 + "." + tasks.get(i));
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println(i + 1 + "." + tasks.get(i));
         }
         System.out.println(LINE);
     }
 
     /**
      * Confirms that a task has been successfully marked as done.
-     * * @param task The task that was marked.
+     * @param task The task that was marked.
      */
     public void showMarkedMessage(Task task) {
         System.out.println(LINE);
@@ -78,7 +81,7 @@ public class Ui {
 
     /**
      * Confirms that a task has been marked as not done.
-     * * @param task The task that was unmarked.
+     * @param task The task that was unmarked.
      */
     public void showUnmarkedMessage(Task task) {
         System.out.println(LINE);
@@ -89,7 +92,7 @@ public class Ui {
 
     /**
      * Confirms that a task has been removed from the task list.
-     * * @param tasks The current task list (to show the updated size).
+     * @param tasks The current task list (to show the updated size).
      * @param removedTask The task that was deleted.
      */
     public void showDeletedMessage(TaskList tasks, Task removedTask) {
@@ -102,7 +105,7 @@ public class Ui {
 
     /**
      * Displays an error message to the user.
-     * * @param message The error message to be displayed.
+     * @param message The error message to be displayed.
      */
     public void showErrorMessage(String message) {
         System.out.println(LINE);
@@ -115,7 +118,7 @@ public class Ui {
      */
     public void showLoadingError() {
         System.out.println(LINE);
-        System.out.println("Warning: No existing data found." );
+        System.out.println("Warning: No existing data found.");
         System.out.println(LINE);
     }
 

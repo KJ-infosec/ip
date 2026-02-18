@@ -1,9 +1,9 @@
-package KJ.command;
-import KJ.KJException;
-import KJ.Storage;
-import KJ.Ui;
-import KJ.task.Task;
-import KJ.task.TaskList;
+package kj.command;
+import kj.KjException;
+import kj.Storage;
+import kj.Ui;
+import kj.task.Task;
+import kj.task.TaskList;
 
 /**
  * Represents a command to search for tasks containing a specific keyword.
@@ -19,7 +19,7 @@ public class FindCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws KJException {
+    public void execute(TaskList tasks, Ui ui, Storage storage) throws KjException {
         TaskList matchingTasks = new TaskList();
 
         for (int i = 0; i < tasks.size(); i++) {

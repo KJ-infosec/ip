@@ -1,15 +1,15 @@
-package KJ.command;
+package kj.command;
 
-import KJ.KJException;
-import KJ.task.Task;
-import KJ.task.TaskList;
-import KJ.Ui;
-import KJ.Storage;
+import kj.KjException;
+import kj.Storage;
+import kj.Ui;
+import kj.task.Task;
+import kj.task.TaskList;
 
 /**
  * Represents a command to remove a task from the task list.
  */
-public class DeleteCommand extends Command{
+public class DeleteCommand extends Command {
     private final int taskNum;
 
     public DeleteCommand(int taskNum) {
@@ -18,18 +18,16 @@ public class DeleteCommand extends Command{
 
     /**
      * Executes the task deletion.
-     * Removes the task from the list, saves the updated list to storage,
-     * and displays a confirmation message.
-     * * @param tasks   The current list of tasks.
+     * @param tasks   The current list of tasks.
      * @param ui      The user interface for interaction.
      * @param storage The storage handler for saving data.
-     * @throws KJException If an error occurs during the storage saving process.
+     * @throws KjException If an error occurs during the storage saving process.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws KJException {
+    public void execute(TaskList tasks, Ui ui, Storage storage) throws KjException {
         try {
             if (taskNum < 0 || taskNum >= tasks.size()) {
-                throw new KJException("That task number does not exist.");
+                throw new KjException("That task number does not exist.");
             }
             Task removedTask = tasks.remove(this.taskNum);
             storage.save(tasks);
@@ -38,6 +36,5 @@ public class DeleteCommand extends Command{
             ui.showErrorMessage(e.getMessage());
         }
     }
-
 
 }

@@ -1,14 +1,14 @@
-package KJ.command;
+package kj.command;
 
-import KJ.KJException;
-import KJ.task.TaskList;
-import KJ.Ui;
-import KJ.Storage;
+import kj.KjException;
+import kj.Storage;
+import kj.Ui;
+import kj.task.TaskList;
 
 /**
  * Represents a command to terminate the application.
  */
-public class ExitCommand extends Command{
+public class ExitCommand extends Command {
 
     /**
      * @return true to indicate this is an exit command.
@@ -23,10 +23,10 @@ public class ExitCommand extends Command{
      * @param tasks   The current list of tasks.
      * @param ui      The user interface for displaying the goodbye message.
      * @param storage The storage handler.
-     * @throws KJException If an error occurs during execution.
+     * @throws KjException If an error occurs during execution.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws KJException {
+    public void execute(TaskList tasks, Ui ui, Storage storage) throws KjException {
         ui.showBye();
     }
 

@@ -1,7 +1,10 @@
-package KJ;
-import KJ.command.Command;
-import KJ.task.TaskList;
+package kj;
+import kj.command.Command;
+import kj.task.TaskList;
 
+/**
+ * The main entry point of the KJ task manager application.
+ */
 public class KJ {
     private Storage storage;
     private TaskList tasks;
@@ -9,15 +12,14 @@ public class KJ {
 
     /**
      * Initializes the KJ application with a specific file path for data storage.
-     * If the data file is not found or corrupted, a new empty task list is initialized.
-     * * @param filePath The relative path to the file where tasks are saved
+     * @param filePath The relative path to the file where tasks are saved
      */
-    public KJ(String filePath ){
+    public KJ(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
-        try{
+        try {
             tasks = storage.load();
-        } catch (KJException e) {
+        } catch (KjException e) {
             ui.showLoadingError();
             tasks = new TaskList();
         }
@@ -31,13 +33,13 @@ public class KJ {
     public void run() {
         ui.showWelcome();
         boolean isExit = false;
-        while(!isExit) {
+        while (!isExit) {
             try {
                 String fullCommand = ui.readCommand();
                 Command c = Parser.parse(fullCommand);
                 c.execute(tasks, ui, storage);
                 isExit = c.isExit();
-            } catch (KJException e) {
+            } catch (KjException e) {
                 ui.showErrorMessage(e.getMessage());
             }
         }

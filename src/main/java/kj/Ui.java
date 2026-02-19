@@ -9,29 +9,44 @@ import kj.task.TaskList;
  * Handles the user interface of the application.
  */
 public class Ui {
-    public static final String LINE = "--------------------------------------------------------------";
+    public static final String LINE = "--------------------------------------------------------";
+    private StringBuilder buffer = new StringBuilder();
     private Scanner scanner;
     public Ui() {
         this.scanner = new Scanner(System.in);
+    }
+
+    private void appendToBuffer(String message) {
+        buffer.append(message).append("\n");
+        System.out.println(message);
+    }
+
+    /**
+     * Returns the accumulated output and clears the buffer.
+     */
+    public String printBuffer() {
+        String output = buffer.toString().trim();
+        buffer.setLength(0); // Clears the buffer for the next command
+        return output;
     }
 
     /**
      * Displays the welcome message to the user.
      */
     public void showWelcome() {
-        System.out.println(LINE);
-        System.out.println("Hello! I'm KJ");
-        System.out.println("What can I do for you? \n");
-        System.out.println(LINE);
+        appendToBuffer(LINE);
+        appendToBuffer("Hello! I'm KJ");
+        appendToBuffer("What can I do for you? \n");
+        appendToBuffer(LINE);
     }
 
     /**
      * Displays the farewell message when the application terminates.
      */
     public void showBye() {
-        System.out.println(LINE);
-        System.out.println("Bye. Hope to see you again soon!");
-        System.out.println(LINE);
+        appendToBuffer(LINE);
+        appendToBuffer("Bye. Hope to see you again soon!");
+        appendToBuffer(LINE);
     }
 
     /**
@@ -48,11 +63,11 @@ public class Ui {
      * @param taskSize The current total number of tasks in the list.
      */
     public void showAddedMessage(Task task, int taskSize) {
-        System.out.println(LINE);
-        System.out.println("Got it. I've added this task:");
-        System.out.println(" " + task);
-        System.out.println("Now you have " + taskSize + " tasks in the list.");
-        System.out.println(LINE);
+        appendToBuffer(LINE);
+        appendToBuffer("Got it. I've added this task:");
+        appendToBuffer(" " + task);
+        appendToBuffer("Now you have " + taskSize + " tasks in the list.");
+        appendToBuffer(LINE);
     }
 
     /**
@@ -61,11 +76,11 @@ public class Ui {
      * @param taskSize The number of tasks to display.
      */
     public void showListMessage(TaskList tasks, int taskSize) {
-        System.out.println(LINE);
+        appendToBuffer(LINE);
         for (int i = 0; i < tasks.size(); i++) {
-            System.out.println(i + 1 + "." + tasks.get(i));
+            appendToBuffer(i + 1 + "." + tasks.get(i));
         }
-        System.out.println(LINE);
+        appendToBuffer(LINE);
     }
 
     /**
@@ -73,10 +88,10 @@ public class Ui {
      * @param task The task that was marked.
      */
     public void showMarkedMessage(Task task) {
-        System.out.println(LINE);
-        System.out.println("Nice! I've marked this task as done:");
-        System.out.println(task);
-        System.out.println(LINE);
+        appendToBuffer(LINE);
+        appendToBuffer("Nice! I've marked this task as done:");
+        appendToBuffer(task.toString());
+        appendToBuffer(LINE);
     }
 
     /**
@@ -84,10 +99,10 @@ public class Ui {
      * @param task The task that was unmarked.
      */
     public void showUnmarkedMessage(Task task) {
-        System.out.println(LINE);
-        System.out.println("Nice! I've unmarked this task as not done yet:");
-        System.out.println(task);
-        System.out.println(LINE);
+        appendToBuffer(LINE);
+        appendToBuffer("Nice! I've unmarked this task as not done yet:");
+        appendToBuffer(task.toString());
+        appendToBuffer(LINE);
     }
 
     /**
@@ -96,11 +111,11 @@ public class Ui {
      * @param removedTask The task that was deleted.
      */
     public void showDeletedMessage(TaskList tasks, Task removedTask) {
-        System.out.println(LINE);
-        System.out.println("Noted. I've removed this task:");
-        System.out.println("  " + removedTask);
-        System.out.println("Now you have " + tasks.size() + " tasks in the list.");
-        System.out.println(LINE);
+        appendToBuffer(LINE);
+        appendToBuffer("Noted. I've removed this task:");
+        appendToBuffer("  " + removedTask);
+        appendToBuffer("Now you have " + tasks.size() + " tasks in the list.");
+        appendToBuffer(LINE);
     }
 
     /**
@@ -108,18 +123,18 @@ public class Ui {
      * @param message The error message to be displayed.
      */
     public void showErrorMessage(String message) {
-        System.out.println(LINE);
-        System.out.println(" " + message);
-        System.out.println(LINE);
+        appendToBuffer(LINE);
+        appendToBuffer(" " + message);
+        appendToBuffer(LINE);
     }
 
     /**
      * Displays an error message indicating that the data file could not be loaded.
      */
     public void showLoadingError() {
-        System.out.println(LINE);
-        System.out.println("Warning: No existing data found.");
-        System.out.println(LINE);
+        appendToBuffer(LINE);
+        appendToBuffer("Warning: No existing data found.");
+        appendToBuffer(LINE);
     }
 
     /**
@@ -127,15 +142,15 @@ public class Ui {
      * @param matchingTasks The filtered list of tasks.
      */
     public void showMatchingTasks(TaskList matchingTasks) {
-        System.out.println(LINE);
+        appendToBuffer(LINE);
         if (matchingTasks.isEmpty()) {
-            System.out.println(" No matching tasks found in your list.");
+            appendToBuffer(" No matching tasks found in your list.");
         } else {
-            System.out.println(" Here are the matching tasks in your list:");
+            appendToBuffer(" Here are the matching tasks in your list:");
             for (int i = 0; i < matchingTasks.size(); i++) {
-                System.out.println(" " + (i + 1) + "." + matchingTasks.get(i));
+                appendToBuffer(" " + (i + 1) + "." + matchingTasks.get(i));
             }
         }
-        System.out.println(LINE);
+        appendToBuffer(LINE);
     }
 }

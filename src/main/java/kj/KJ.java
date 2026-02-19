@@ -9,12 +9,12 @@ public class KJ {
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
+    private final String filePath = "data/kj.txt";
 
     /**
      * Initializes the KJ application with a specific file path for data storage.
-     * @param filePath The relative path to the file where tasks are saved
      */
-    public KJ(String filePath) {
+    public KJ() {
         ui = new Ui();
         storage = new Storage(filePath);
         try {
@@ -45,7 +45,17 @@ public class KJ {
         }
     }
 
+    public String getResponse(String input) {
+        try {
+            Command c = Parser.parse(input);
+            c.execute(tasks, ui, storage);
+            return ui.printBuffer();
+        } catch (KjException e) {
+            return e.getMessage();
+        }
+    }
+
     public static void main() {
-        new KJ("data/kj.txt").run();
+        new Ui().showWelcome();
     }
 }

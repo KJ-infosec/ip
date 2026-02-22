@@ -16,7 +16,6 @@ import kj.task.ToDo;
  * Parsing and reading user input into KJ application.
  */
 public class Parser {
-    private static int taskNum;
     /**
      * Parses the given input string and returns the appropriate Command object.
      * @param input The raw user input string.
@@ -25,71 +24,104 @@ public class Parser {
      */
     public static Command parse(String input) throws KjException {
         assert input != null : "Parser received a null input string";
-        if (input.equals("bye")) {
+
+        // Extract the first word to determine the command type
+        String commandWord = input.trim().split(" ")[0].toLowerCase();
+
+        switch (commandWord) {
+        case "bye":
             return new ExitCommand();
-        }
 
-        if (input.equals("list")) {
+        case "list":
             return new ListCommand();
-        }
 
-        if (input.startsWith("mark")) {
-            String[] parts = input.split(" ");
-            assert parts.length >= 2 : "Mark command logic failed to provide index";
-            taskNum = Integer.parseInt(parts[1]) - 1;
-            return new MarkCommand(taskNum);
-        }
+        case "mark":
+            return prepareMark(input);
 
-        if (input.startsWith("unmark")) {
-            String[] parts = input.split(" ");
-            assert parts.length >= 2 : "Unmark command logic failed to provide index";
-            taskNum = Integer.parseInt(parts[1]) - 1;
-            return new UnmarkCommand(taskNum);
-        }
+        case "unmark":
+            return prepareUnmark(input);
 
-        if (input.startsWith("todo")) {
-            if (input.equals("todo")) {
-                throw new KjException("The description of a Todo cannot be empty.");
-            }
-            String description = input.substring(5);
-            assert !description.isEmpty() : "Todo description extraction logic failed";
-            return new AddCommand(new ToDo(description));
-        }
+        case "todo":
+            return prepareTodo(input);
 
-        if (input.startsWith("event")) {
-            if (!input.contains("/from") || !input.contains("/to")) {
-                // Throw it and let KJ.java handle the display
-                throw new KjException("Event must have /from and /to");
-            }
-            String[] description = input.substring(6).split(" /from | /to ");
-            assert description.length == 3 : "Event parsing failed to extract three components";
-            return new AddCommand(new Event(description[0], description[1], description[2]));
-        }
+        case "deadline":
+            return prepareDeadline(input);
 
-        if (input.startsWith("deadline")) {
-            if (!input.contains("/by")) {
-                throw new KjException("Deadline must have /by.");
-            }
-            String[] description = input.substring(9).split(" /by ");
-            assert description.length == 2 : "Deadline parsing failed to extract two components";
-            return new AddCommand(new Deadline(description[0], description[1]));
-        }
+        case "event":
+            return prepareEvent(input);
 
-        if (input.startsWith("delete")) {
-            String[] parts = input.split(" ");
-            assert parts.length >= 2 : "Delete command logic failed to provide index";
-            int taskNum = Integer.parseInt(parts[1]) - 1;
-            return new DeleteCommand(taskNum);
-        }
+        case "delete":
+            return prepareDelete(input);
 
-        if (input.startsWith("find")) {
-            String keyword = input.substring(4).trim();
-            if (keyword.isEmpty()) {
-                throw new KjException("The search keyword cannot be empty.");
-            }
-            return new FindCommand(keyword);
-        }
+        case "find":
+            return prepareFind(input);
 
-        throw new KjException("Sorry, I don't understand that command.");
+        default:
+            throw new KjException("Sorry, I don't understand that command.");
+        }
+    }
+
+    private static Command prepareTodo(String input) throws KjException {
+        if (input.equals("todo")) {
+            throw new KjException("The description of a Todo cannot be empty.");
+        }
+        String description = input.substring(5).trim();
+        assert !description.isEmpty() : "Todo description extraction logic failed";
+        return new AddCommand(new ToDo(description));
+    }
+
+    private static Command prepareDeadline(String input) throws KjException {
+        if (!input.contains("/by")) {
+            throw new KjException("Deadline must have /by.");
+        }
+        String[] parts = input.substring(9).split(" /by ", 2);
+        if (parts.length < 2 || parts[0].trim().isEmpty()) {
+            throw new KjException("Deadline description and date cannot be empty.");
+        }
+        return new AddCommand(new Deadline(parts[0].trim(), parts[1].trim()));
+    }
+
+    private static Command prepareEvent(String input) throws KjException {
+        if (!input.contains("/from") || !input.contains("/to")) {
+            throw new KjException("Event must have /from and /to");
+        }
+        String[] parts = input.substring(6).split(" /from | /to ");
+        assert parts.length == 3 : "Event parsing failed to extract three components";
+        return new AddCommand(new Event(parts[0].trim(), parts[1].trim(), parts[2].trim()));
+    }
+
+    private static Command prepareMark(String input) throws KjException {
+        try {
+            int index = Integer.parseInt(input.split(" ")[1]) - 1;
+            return new MarkCommand(index);
+        } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+            throw new KjException("Please provide a valid task number to mark.");
+        }
+    }
+
+    private static Command prepareUnmark(String input) throws KjException {
+        try {
+            int index = Integer.parseInt(input.split(" ")[1]) - 1;
+            return new UnmarkCommand(index);
+        } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+            throw new KjException("Please provide a valid task number to unmark.");
+        }
+    }
+
+    private static Command prepareDelete(String input) throws KjException {
+        try {
+            int index = Integer.parseInt(input.split(" ")[1]) - 1;
+            return new DeleteCommand(index);
+        } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+            throw new KjException("Please provide a valid task number to delete.");
+        }
+    }
+
+    private static Command prepareFind(String input) throws KjException {
+        String keyword = input.substring(4).trim();
+        if (keyword.isEmpty()) {
+            throw new KjException("The search keyword cannot be empty.");
+        }
+        return new FindCommand(keyword);
     }
 }

@@ -55,7 +55,7 @@ public class KJ {
         }
     }
 
-    public static void main() {
-        new Ui().showWelcome();
+    public static void main(String[] args) {
+        new KJ().run();
     }
 }

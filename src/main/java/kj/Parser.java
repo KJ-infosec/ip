@@ -24,6 +24,7 @@ public class Parser {
      * @throws KjException If the input format is invalid or the command is unknown.
      */
     public static Command parse(String input) throws KjException {
+        assert input != null : "Parser received a null input string";
         if (input.equals("bye")) {
             return new ExitCommand();
         }
@@ -33,53 +34,51 @@ public class Parser {
         }
 
         if (input.startsWith("mark")) {
-            taskNum = Integer.parseInt(input.split(" ")[1]) - 1;
+            String[] parts = input.split(" ");
+            assert parts.length >= 2 : "Mark command logic failed to provide index";
+            taskNum = Integer.parseInt(parts[1]) - 1;
             return new MarkCommand(taskNum);
         }
 
         if (input.startsWith("unmark")) {
-            taskNum = Integer.parseInt(input.split(" ")[1]) - 1;
+            String[] parts = input.split(" ");
+            assert parts.length >= 2 : "Unmark command logic failed to provide index";
+            taskNum = Integer.parseInt(parts[1]) - 1;
             return new UnmarkCommand(taskNum);
         }
 
         if (input.startsWith("todo")) {
-            try {
-                if (input.equals("todo")) {
-                    throw new KjException("The description of a todo cannot be empty.");
-                }
-                String description = input.substring(5);
-                return new AddCommand(new ToDo(description));
-            } catch (KjException e) {
-                System.out.println(e.getMessage());
+            if (input.equals("todo")) {
+                throw new KjException("The description of a Todo cannot be empty.");
             }
+            String description = input.substring(5);
+            assert !description.isEmpty() : "Todo description extraction logic failed";
+            return new AddCommand(new ToDo(description));
         }
 
         if (input.startsWith("event")) {
-            try {
-                if (!input.contains("/from") || !input.contains("/to")) {
-                    throw new KjException("Event must have /from and /to");
-                }
-                String[] description = input.substring(6).split(" /from | /to ");
-                return new AddCommand(new Event(description[0], description[1], description[2]));
-            } catch (KjException e) {
-                System.out.println(e.getMessage());
+            if (!input.contains("/from") || !input.contains("/to")) {
+                // Throw it and let KJ.java handle the display
+                throw new KjException("Event must have /from and /to");
             }
+            String[] description = input.substring(6).split(" /from | /to ");
+            assert description.length == 3 : "Event parsing failed to extract three components";
+            return new AddCommand(new Event(description[0], description[1], description[2]));
         }
 
         if (input.startsWith("deadline")) {
-            try {
-                if (!input.contains("/by")) {
-                    throw new KjException("Deadline must have /by.");
-                }
-                String[] description = input.substring(9).split(" /by ");
-                return new AddCommand(new Deadline(description[0], description[1]));
-            } catch (KjException e) {
-                System.out.println(e.getMessage());
+            if (!input.contains("/by")) {
+                throw new KjException("Deadline must have /by.");
             }
+            String[] description = input.substring(9).split(" /by ");
+            assert description.length == 2 : "Deadline parsing failed to extract two components";
+            return new AddCommand(new Deadline(description[0], description[1]));
         }
 
         if (input.startsWith("delete")) {
-            int taskNum = Integer.parseInt(input.split(" ")[1]) - 1;
+            String[] parts = input.split(" ");
+            assert parts.length >= 2 : "Delete command logic failed to provide index";
+            int taskNum = Integer.parseInt(parts[1]) - 1;
             return new DeleteCommand(taskNum);
         }
 

@@ -119,6 +119,20 @@ public class Ui {
     }
 
     /**
+     * Confirms that the task list has been sorted.
+     * @param tasks The task list
+     */
+    public void showSortedMessage(TaskList tasks) {
+        appendToBuffer(LINE);
+        appendToBuffer("Noted. I've sorted the task list");
+        appendToBuffer("Here is the task list:");
+        for (int i = 0; i < tasks.size(); i++) {
+            appendToBuffer(i + 1 + "." + tasks.get(i));
+        }
+        appendToBuffer(LINE);
+    }
+
+    /**
      * Displays an error message to the user.
      * @param message The error message to be displayed.
      */

@@ -1,5 +1,6 @@
 package kj.task;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
@@ -43,7 +44,42 @@ public class TaskList {
         return tasks.get(taskNum);
     }
 
+    private LocalDateTime getTaskDate(Task t) {
+        if (t instanceof Deadline) {
+            return ((Deadline) t).getTaskDate();
+        }
+        if (t instanceof Event) {
+            return ((Event) t).getTaskDate();
+        }
+        return null;
+    }
 
+    /**
+     * Sort tasklist by its date
+     */
+    public void sortByDate() {
+        tasks.sort((t1, t2) -> {
+            // Deadlines and Events have dates; ToDos do not.
+            // We can push ToDos to the bottom.
+            LocalDateTime d1 = getTaskDate(t1);
+            LocalDateTime d2 = getTaskDate(t2);
+
+            if (d1 == null) {
+                return 1;
+            }
+            if (d2 == null) {
+                return -1;
+            }
+            return d1.compareTo(d2);
+        });
+    }
+
+    /**
+     *  Sorts the ArrayList in-place alphabetically by description
+     */
+    public void sortByName() {
+        tasks.sort((t1, t2) -> t1.getDescription().compareToIgnoreCase(t2.getDescription()));
+    }
     /**
      * @return The raw ArrayList containing all tasks.
      */
@@ -54,4 +90,5 @@ public class TaskList {
     public boolean isEmpty() {
         return tasks.isEmpty();
     }
+
 }

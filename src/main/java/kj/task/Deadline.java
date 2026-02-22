@@ -30,6 +30,10 @@ public class Deadline extends Task {
         }
     }
 
+    public LocalDateTime getTaskDate() {
+        return this.by;
+    }
+
     /**
      * Returns a string representation of the deadline task formatted for file storage.
      * The format used is: D | isDone | description | date.

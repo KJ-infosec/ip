@@ -7,6 +7,7 @@ import kj.command.ExitCommand;
 import kj.command.FindCommand;
 import kj.command.ListCommand;
 import kj.command.MarkCommand;
+import kj.command.SortCommand;
 import kj.command.UnmarkCommand;
 import kj.task.Deadline;
 import kj.task.Event;
@@ -56,6 +57,8 @@ public class Parser {
         case "find":
             return prepareFind(input);
 
+        case "sort":
+            return prepareSort(input);
         default:
             throw new KjException("Sorry, I don't understand that command.");
         }
@@ -123,5 +126,13 @@ public class Parser {
             throw new KjException("The search keyword cannot be empty.");
         }
         return new FindCommand(keyword);
+    }
+
+    private static Command prepareSort(String input) throws KjException {
+        String category = input.substring(4).trim();
+        if (!category.equals("name") && !category.equals("date")) {
+            throw new KjException("OOps!! Sorry, we can only sort by date or name.");
+        }
+        return new SortCommand(category);
     }
 }

@@ -28,7 +28,9 @@ public abstract class Task {
     public void markAsUndone() {
         this.isDone = false;
     }
-
+    public String getDescription() {
+        return this.description;
+    }
     public abstract String toFileString();
 
     @Override

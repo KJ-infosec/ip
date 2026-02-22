@@ -24,6 +24,9 @@ public class Event extends Task {
         this.endTime = LocalDateTime.parse(endTime, INPUT_FORMAT);
     }
 
+    public LocalDateTime getTaskDate() {
+        return this.startTime;
+    }
     /**
      * Returns a string representation of the event task formatted for file storage.
      * The format used is: E | isDone | description | startTime | endTime.

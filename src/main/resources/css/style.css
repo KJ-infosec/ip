@@ -1,0 +1,6 @@
+/* src/main/resources/css/style.css */
+.anchor-pane {
+    -fx-background-color: red;
+    -fx-background-image: url("../images/background.jpg");
+    -fx-background-size: cover;
+}

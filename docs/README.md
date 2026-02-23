@@ -23,29 +23,29 @@ Prerequisites: JDK 17, update Intellij to the most recent version.
 
 1. Open Intellij (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project first)
 2. Open the project into Intellij as follows:
-   - Click `Open`.
-   - Select the project directory, and click `OK`.
-   - If there are any further prompts, accept the defaults.
+    - Click `Open`.
+    - Select the project directory, and click `OK`.
+    - If there are any further prompts, accept the defaults.
 3. Configure the project to use **JDK 17** (not other versions) as explained in [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).<br>
    In the same dialog, set the **Project language level** field to the `SDK default` option.
-4. Let Gradle finish syncing. 
-**Warning:** Keep the `src\main\java` folder as the root folder for Java files (i.e., don't rename those folders or move Java files to another folder outside of this folder path), as this is the default location some tools (e.g., Gradle) expect to find Java files.
+4. Let Gradle finish syncing.
+   **Warning:** Keep the `src\main\java` folder as the root folder for Java files (i.e., don't rename those folders or move Java files to another folder outside of this folder path), as this is the default location some tools (e.g., Gradle) expect to find Java files.
 
 ## 📥 Running the Application
 1. Running from Source
    If you have cloned the repository and want to run it via Gradle:
 
-   1. Open your terminal in the project root folder.
+    1. Open your terminal in the project root folder.
 
-   2. Run the following command:
+    2. Run the following command:
 
-      - Windows: `gradlew run`
+        - Windows: `gradlew run`
 
-      - Mac/Linux: `./gradlew run`
+        - Mac/Linux: `./gradlew run`
 
 2. Using the Executable JAR
-   1. Build the shaded JAR:
-      ```./gradlew shadowJar```
-   2. Run it: 
-      ``` java -jar build/libs/kj.jar```
+    1. Build the shaded JAR:
+       ```./gradlew shadowJar```
+    2. Run it:
+       ``` java -jar build/libs/kj.jar```
    

@@ -25,9 +25,17 @@ public class MainWindow extends AnchorPane {
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/user.jpg"));
     private Image kjImage = new Image(this.getClass().getResourceAsStream("/images/chatbot.jpg"));
 
+    /**
+     * Initialize KJ application
+     */
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
+        String welcomeMessage = "Welcome back! My circuits are ready to hold your ideas so your mind doesn't have to. "
+                + "What's on your brain?";
+        dialogContainer.getChildren().add(
+                DialogBox.getKjDialog(welcomeMessage, kjImage)
+        );
     }
 
     /** Injects the KJ instance */

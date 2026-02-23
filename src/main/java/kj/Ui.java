@@ -9,7 +9,6 @@ import kj.task.TaskList;
  * Handles the user interface of the application.
  */
 public class Ui {
-    public static final String LINE = "--------------------------------------------------------";
     private StringBuilder buffer = new StringBuilder();
     private Scanner scanner;
     public Ui() {
@@ -34,19 +33,15 @@ public class Ui {
      * Displays the welcome message to the user.
      */
     public void showWelcome() {
-        appendToBuffer(LINE);
         appendToBuffer("Hello! I'm KJ");
         appendToBuffer("What can I do for you? \n");
-        appendToBuffer(LINE);
     }
 
     /**
      * Displays the farewell message when the application terminates.
      */
     public void showBye() {
-        appendToBuffer(LINE);
-        appendToBuffer("Bye. Hope to see you again soon!");
-        appendToBuffer(LINE);
+        appendToBuffer("Powering down. Your tasks are safe with me \ngo enjoy that clear headspace!");
     }
 
     /**
@@ -63,11 +58,9 @@ public class Ui {
      * @param taskSize The current total number of tasks in the list.
      */
     public void showAddedMessage(Task task, int taskSize) {
-        appendToBuffer(LINE);
         appendToBuffer("Got it. I've added this task:");
         appendToBuffer(" " + task);
         appendToBuffer("Now you have " + taskSize + " tasks in the list.");
-        appendToBuffer(LINE);
     }
 
     /**
@@ -76,11 +69,9 @@ public class Ui {
      * @param taskSize The number of tasks to display.
      */
     public void showListMessage(TaskList tasks, int taskSize) {
-        appendToBuffer(LINE);
         for (int i = 0; i < tasks.size(); i++) {
             appendToBuffer(i + 1 + "." + tasks.get(i));
         }
-        appendToBuffer(LINE);
     }
 
     /**
@@ -88,10 +79,8 @@ public class Ui {
      * @param task The task that was marked.
      */
     public void showMarkedMessage(Task task) {
-        appendToBuffer(LINE);
         appendToBuffer("Nice! I've marked this task as done:");
         appendToBuffer(task.toString());
-        appendToBuffer(LINE);
     }
 
     /**
@@ -99,10 +88,8 @@ public class Ui {
      * @param task The task that was unmarked.
      */
     public void showUnmarkedMessage(Task task) {
-        appendToBuffer(LINE);
         appendToBuffer("Nice! I've unmarked this task as not done yet:");
         appendToBuffer(task.toString());
-        appendToBuffer(LINE);
     }
 
     /**
@@ -111,11 +98,9 @@ public class Ui {
      * @param removedTask The task that was deleted.
      */
     public void showDeletedMessage(TaskList tasks, Task removedTask) {
-        appendToBuffer(LINE);
         appendToBuffer("Noted. I've removed this task:");
         appendToBuffer("  " + removedTask);
         appendToBuffer("Now you have " + tasks.size() + " tasks in the list.");
-        appendToBuffer(LINE);
     }
 
     /**
@@ -123,13 +108,11 @@ public class Ui {
      * @param tasks The task list
      */
     public void showSortedMessage(TaskList tasks) {
-        appendToBuffer(LINE);
         appendToBuffer("Noted. I've sorted the task list");
         appendToBuffer("Here is the task list:");
         for (int i = 0; i < tasks.size(); i++) {
             appendToBuffer(i + 1 + "." + tasks.get(i));
         }
-        appendToBuffer(LINE);
     }
 
     /**
@@ -137,18 +120,14 @@ public class Ui {
      * @param message The error message to be displayed.
      */
     public void showErrorMessage(String message) {
-        appendToBuffer(LINE);
         appendToBuffer(" " + message);
-        appendToBuffer(LINE);
     }
 
     /**
      * Displays an error message indicating that the data file could not be loaded.
      */
     public void showLoadingError() {
-        appendToBuffer(LINE);
         appendToBuffer("Warning: No existing data found.");
-        appendToBuffer(LINE);
     }
 
     /**
@@ -156,7 +135,6 @@ public class Ui {
      * @param matchingTasks The filtered list of tasks.
      */
     public void showMatchingTasks(TaskList matchingTasks) {
-        appendToBuffer(LINE);
         if (matchingTasks.isEmpty()) {
             appendToBuffer(" No matching tasks found in your list.");
         } else {
@@ -165,6 +143,5 @@ public class Ui {
                 appendToBuffer(" " + (i + 1) + "." + matchingTasks.get(i));
             }
         }
-        appendToBuffer(LINE);
     }
 }

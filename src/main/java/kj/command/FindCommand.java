@@ -21,10 +21,10 @@ public class FindCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws KjException {
         TaskList matchingTasks = new TaskList();
-
+        String lowerCaseKeyword = keyword.toLowerCase();
         for (int i = 0; i < tasks.size(); i++) {
             Task task = tasks.get(i);
-            if (task.toString().contains(keyword)) {
+            if (task.toString().toLowerCase().contains(lowerCaseKeyword)) {
                 matchingTasks.add(task);
             }
         }

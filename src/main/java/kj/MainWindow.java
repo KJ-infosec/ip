@@ -51,6 +51,9 @@ public class MainWindow extends AnchorPane {
     private void handleUserInput() {
         String input = userInput.getText();
         String response = kj.getResponse(input);
+        if (input.trim().equalsIgnoreCase("bye")) {
+            javafx.application.Platform.exit();
+        }
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
                 DialogBox.getKjDialog(response, kjImage)

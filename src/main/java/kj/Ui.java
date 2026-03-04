@@ -69,6 +69,9 @@ public class Ui {
      * @param taskSize The number of tasks to display.
      */
     public void showListMessage(TaskList tasks, int taskSize) {
+        if (taskSize == 0) {
+            appendToBuffer("There are no tasks in the list.");
+        }
         for (int i = 0; i < tasks.size(); i++) {
             appendToBuffer(i + 1 + "." + tasks.get(i));
         }
